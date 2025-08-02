@@ -1,6 +1,6 @@
-# Node Blog App 📝💬
+# Web Socket.io - Node Blog App 📝💬
 
-A real-time blog and chat application built with **Express.js**, **Socket.IO**, and **Mongoose**. This project allows users to post blog comments and participate in live chat discussions, making it perfect for collaborative blogging and interactive communities.
+A real-time chat application built with **Express.js**, **Socket.IO**, and **Mongoose**. This project allows users to post blog comments and participate in live chat discussions, making it perfect for collaborative blogging and interactive communities.
 
 ## Features 🚀
 
