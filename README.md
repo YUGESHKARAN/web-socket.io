@@ -36,9 +36,9 @@ A real-time chat application built with **Express.js**, **Socket.IO**, and **Mon
 
 4. **Start the application:**
    ```bash
-   npm start
+   npm run dev
    ```
-   The application will typically run on `http://localhost:3000`.
+   The application will typically run on `http://localhost:4000`.
 
 ## Usage ✍️
 
