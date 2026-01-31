@@ -73,7 +73,8 @@ io.on("connection", (socket) => {
         { $push: { "posts.$.messages": newMessage } }
       );
 
-      socket.to(postId).emit("message", newMessage);
+      // socket.to(postId).emit("newMessage", newMessage);
+      io.to(postId).emit("newMessage", newMessage);
 
       const notification = {
         postId,
