@@ -5,9 +5,11 @@ const http = require("http");
 const cors = require("cors");
 const { Server } = require("socket.io");
 require("dotenv").config();
+const mongoose = require("mongoose");
 
 const connectToDatabase = require("./db");
 const Author = require("./models/blogAuthorSchema");
+const { timeStamp } = require("console");
 
 const PORT = process.env.SOCKET_PORT || 4000;
 
@@ -16,15 +18,17 @@ const server = http.createServer(app);
 
 connectToDatabase();
 
-app.use(cors({
-  origin: [
-    "https://blog-frontend-teal-ten.vercel.app",
-    "http://localhost:5173",
-    "https://mongodb-rag-rho.vercel.app",
-  ],
-  methods: ["GET", "POST"],
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: [
+      "https://blog-frontend-teal-ten.vercel.app",
+      "http://localhost:5173",
+      "https://mongodb-rag-rho.vercel.app",
+    ],
+    methods: ["GET", "POST"],
+    credentials: true,
+  }),
+);
 
 const io = new Server(server, {
   cors: {
@@ -35,7 +39,7 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
     credentials: true,
   },
-  transports: ["polling"],
+  // transports: ["polling"],
 });
 
 const userSocketMap = new Map();
@@ -54,36 +58,40 @@ io.on("connection", (socket) => {
   });
 
   socket.on("newMessage", async (data) => {
-    const { postId, user, email, url, message } = data;
+    const { postId, user, email, url, message, createdAt } = data;
 
     try {
       const author = await Author.findOne(
         { "posts._id": postId },
-        { email: 1, "posts.$": 1 }
+        { email: 1, "posts.$": 1 },
       );
 
       const authorProfile = await Author.findOne({ email });
       const profile = authorProfile?.profile || "";
 
       const authorEmail = author.email;
-      const newMessage = { user, message, profile };
+      // const newMessage = { user, message, profile };
+      const newMessage = {
+        _id: new mongoose.Types.ObjectId(),
+        user,
+        email,
+        message,
+        profile,
+        timestamp: createdAt || new Date(),
+      };
 
       await Author.updateOne(
         { "posts._id": postId },
-        { $push: { "posts.$.messages": newMessage } }
+        { $push: { "posts.$.messages": newMessage } },
       );
-
 
       // socket.to(postId).emit("newMessage", newMessage);
       io.to(postId).emit("newMessage", newMessage);
 
-
-       const commentMessage = `Commentted: ${message}`
       const notification = {
         postId,
         user,
-        // message,
-        message:commentMessage,
+        message,
         profile,
         authorEmail,
         url,
@@ -95,11 +103,11 @@ io.on("connection", (socket) => {
         // User online
         io.to(authorSocketId).emit("notification", notification);
         console.log(`Notification sent to: ${authorEmail}`);
-      } else if(email!= authorEmail) {
+      } else {
         // User offline — store
         await Author.updateOne(
           { email: authorEmail },
-          { $push: { notification } }
+          { $push: { notification } },
         );
         console.log(`Notification saved for: ${authorEmail}`);
       }
