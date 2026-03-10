@@ -80,6 +80,8 @@ io.on("connection", (socket) => {
         timestamp: createdAt || new Date(),
       };
 
+      const notfiMesg = `Commented: ${message}`
+
       await Author.updateOne(
         { "posts._id": postId },
         { $push: { "posts.$.messages": newMessage } },
@@ -91,7 +93,7 @@ io.on("connection", (socket) => {
       const notification = {
         postId,
         user,
-        message,
+        message:notfiMesg,
         profile,
         authorEmail,
         url,
