@@ -73,13 +73,17 @@ io.on("connection", (socket) => {
         { $push: { "posts.$.messages": newMessage } }
       );
 
+
       // socket.to(postId).emit("newMessage", newMessage);
       io.to(postId).emit("newMessage", newMessage);
 
+
+       const commentMessage = `Commentted: ${message}`
       const notification = {
         postId,
         user,
-        message,
+        // message,
+        message:commentMessage,
         profile,
         authorEmail,
         url,
@@ -91,7 +95,7 @@ io.on("connection", (socket) => {
         // User online
         io.to(authorSocketId).emit("notification", notification);
         console.log(`Notification sent to: ${authorEmail}`);
-      } else {
+      } else if(email!= authorEmail) {
         // User offline — store
         await Author.updateOne(
           { email: authorEmail },
