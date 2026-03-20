@@ -1,4 +1,4 @@
-# Web Socket.io - Node Blog App 📝💬
+# Web Socket.io - Tech. Community App 📝💬
 
 A real-time chat application built with **Express.js**, **Socket.IO**, and **Mongoose**. This project allows users to post blog comments and participate in live chat discussions, making it perfect for collaborative blogging and interactive communities.
 
