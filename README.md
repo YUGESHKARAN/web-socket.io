@@ -3,7 +3,7 @@
 A real-time chat application built with **Express.js**, **Socket.IO**, and **Mongoose**. This project allows users to post blog comments and participate in live chat discussions, making it perfect for collaborative blogging and interactive communities.
 
 ## Features
-
+ 
 - **Blog Posting:** Users can create and comment on blog posts.
 - **Real-Time Chat:** Integrated with Socket.IO for live chat functionality—see messages instantly without refreshing the page.
 - **MongoDB Integration:** Uses Mongoose for seamless interaction with a MongoDB database to store posts, comments, and user data.
