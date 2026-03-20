@@ -1,8 +1,8 @@
-# Web Socket.io - Tech. Community App 📝💬
+# Web Socket.io - Tech. Community App
 
 A real-time chat application built with **Express.js**, **Socket.IO**, and **Mongoose**. This project allows users to post blog comments and participate in live chat discussions, making it perfect for collaborative blogging and interactive communities.
 
-## Features 🚀
+## Features
 
 - **Blog Posting:** Users can create and comment on blog posts.
 - **Real-Time Chat:** Integrated with Socket.IO for live chat functionality—see messages instantly without refreshing the page.
@@ -10,12 +10,25 @@ A real-time chat application built with **Express.js**, **Socket.IO**, and **Mon
 - **Express.js Backend:** Robust API and server-side logic powered by Express.js.
 - **User-Friendly Interface:** Simple and intuitive UI for posting, commenting, and chatting.
 
-## Getting Started 🛠️
+## Usage
+
+- **Post Blogs:** Create and publish blog posts.
+- **Comment:** Add comments to posts and discuss topics.
+- **Live Chat:** Use the sidebar or chat section for real-time conversations with other users.
+
+## Technologies Used 
+
+- [Express.js](https://expressjs.com/) – Backend web framework
+- [Socket.IO](https://socket.io/) – Real-time communication
+- [Mongoose](https://mongoosejs.com/) – MongoDB object modeling
+- [MongoDB](https://www.mongodb.com/) – Database
+
+## Getting Started 
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) ⚡
-- [MongoDB](https://www.mongodb.com/) 🗄️
+- [Node.js](https://nodejs.org/) 
+- [MongoDB](https://www.mongodb.com/) 
 
 ### Installation
 
@@ -40,29 +53,18 @@ A real-time chat application built with **Express.js**, **Socket.IO**, and **Mon
    ```
    The application will typically run on `http://localhost:4000`.
 
-## Usage ✍️
 
-- **Post Blogs:** Create and publish blog posts.
-- **Comment:** Add comments to posts and discuss topics.
-- **Live Chat:** Use the sidebar or chat section for real-time conversations with other users.
 
-## Technologies Used 🧩
-
-- [Express.js](https://expressjs.com/) – Backend web framework
-- [Socket.IO](https://socket.io/) – Real-time communication
-- [Mongoose](https://mongoosejs.com/) – MongoDB object modeling
-- [MongoDB](https://www.mongodb.com/) – Database
-
-## Contributing 🤝
+## Contributing 
 
 Contributions are welcome! Please fork the repository and submit a pull request for review.
 
-## License 📄
+## License
 
 This project is licensed under the MIT License.
 
 ---
 
-### Author 👨‍💻
+### Author 
 
 [YUGESHKARAN](https://github.com/YUGESHKARAN)
