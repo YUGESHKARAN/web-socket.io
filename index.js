@@ -47,6 +47,44 @@ const userSocketMap = new Map();
 io.on("connection", (socket) => {
   console.log("Socket connected:", socket.id);
 
+  socket.on("editMessage", async (data) => {
+    const { postId, messageId, message } = data;
+    try {
+      await Author.updateOne(
+        { "posts._id": postId, "posts.messages._id": messageId },
+        { $set: { "posts.$[post].messages.$[msg].message": message } },
+        {
+          arrayFilters: [
+            { "post._id": new mongoose.Types.ObjectId(postId) },
+            { "msg._id": new mongoose.Types.ObjectId(messageId) },
+          ],
+        },
+      );
+
+      io.to(postId).emit("editMessage", { messageId, message });
+    } catch (error) {
+      console.error("Error in editMessage:", error);
+    }
+  });
+
+  socket.on("deleteMessage", async (data) => {
+    const { postId, messageId } = data;
+    try {
+      await Author.updateOne(
+        { "posts._id": postId },
+        {
+          $pull: {
+            "posts.$.messages": { _id: new mongoose.Types.ObjectId(messageId) },
+          },
+        },
+      );
+
+      io.to(postId).emit("deleteMessage", { messageId });
+    } catch (error) {
+      console.error("Error in deleteMessage:", error);
+    }
+  });
+
   socket.on("registerUser", (email) => {
     userSocketMap.set(email, socket.id);
     console.log(`Registered: ${email} → ${socket.id}`);
@@ -66,7 +104,7 @@ io.on("connection", (socket) => {
         { email: 1, "posts.$": 1 },
       );
 
-      const authorProfile = await Author.findOne({ email });
+      const authorProfile = await Author.findOne({ email: { $eq: email } });
       const profile = authorProfile?.profile || "";
 
       const authorEmail = author.email;
@@ -80,7 +118,7 @@ io.on("connection", (socket) => {
         timestamp: createdAt || new Date(),
       };
 
-      const notfiMesg = `Commented: ${message}`
+      const notfiMesg = `Commented: ${message}`;
 
       await Author.updateOne(
         { "posts._id": postId },
@@ -93,7 +131,7 @@ io.on("connection", (socket) => {
       const notification = {
         postId,
         user,
-        message:notfiMesg,
+        message: notfiMesg,
         profile,
         authorEmail,
         url,
