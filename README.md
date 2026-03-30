@@ -1,6 +1,6 @@
 # Tech-Discussion.io - Tech. Community App
 
-A real-time chat application built with **Express.js**, **Web-Socket.io**, and **Mongoose**. It's an microservice for [Tech-Community-App](https://github.com/YUGESHKARAN/Tech-Community-App.git), which allows users to participate in live chat discussions and share thoughts about the tech content.
+A real-time chat application built with **Express.js**, **Web-Socket.io**, and **Mongoose**. It's a microservice for [Tech-Community-App](https://github.com/YUGESHKARAN/Tech-Community-App.git) that allows users to participate in live chat discussions and share thoughts about the tech content.
 
 ## Features
  
