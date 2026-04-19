@@ -1,25 +1,17 @@
-# Web Socket.io - Tech. Community App
+# Tech-Discussion.io - Tech. Community App
 
-A real-time chat application built with **Express.js**, **Socket.IO**, and **Mongoose**. This project allows users to post blog comments and participate in live chat discussions, making it perfect for collaborative blogging and interactive communities.
+A real-time chat application built with **Express.js**, **Web-Socket.io**, and **Mongoose**. It's a microservice for [Tech-Community-App](https://github.com/YUGESHKARAN/Tech-Community-App.git) that allows users to participate in live chat discussions and share thoughts about the tech content.
 
 ## Features
  
-- **Blog Posting:** Users can create and comment on blog posts.
-- **Real-Time Chat:** Integrated with Socket.IO for live chat functionality—see messages instantly without refreshing the page.
-- **MongoDB Integration:** Uses Mongoose for seamless interaction with a MongoDB database to store posts, comments, and user data.
-- **Express.js Backend:** Robust API and server-side logic powered by Express.js.
-- **User-Friendly Interface:** Simple and intuitive UI for posting, commenting, and chatting.
-
-## Usage
-
-- **Post Blogs:** Create and publish blog posts.
-- **Comment:** Add comments to posts and discuss topics.
-- **Live Chat:** Use the sidebar or chat section for real-time conversations with other users.
+- **Real-Time Chat:** Integrated to [Tech-Community-App](https://github.com/YUGESHKARAN/Tech-Community-App.git) for live descussions without refreshing the page.
+- **Content Control:** Users can edit or delete their posted comment. 
+- **User-Friendly Interface:** Simple and intuitive UI for chatting.
 
 ## Technologies Used 
 
 - [Express.js](https://expressjs.com/) – Backend web framework
-- [Socket.IO](https://socket.io/) – Real-time communication
+- [Tech-Discussion.io](https://socket.io/) – Real-time communication
 - [Mongoose](https://mongoosejs.com/) – MongoDB object modeling
 - [MongoDB](https://www.mongodb.com/) – Database
 
@@ -34,8 +26,8 @@ A real-time chat application built with **Express.js**, **Socket.IO**, and **Mon
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/YUGESHKARAN/Node-Blog-App.git
-   cd Node-Blog-App
+   git clone https://github.com/YUGESHKARAN/Tech-Discussion.io.git
+   cd Tech-Discussion.io
    ```
 
 2. **Install dependencies:**
