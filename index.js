@@ -19,6 +19,7 @@ connectToDatabase();
 
 app.use(cors({
   origin: [
+    "https://www.bytesbase.tech",
     "https://blog-frontend-teal-ten.vercel.app",
     "http://localhost:5173",
     "https://mongodb-rag-rho.vercel.app",
@@ -30,6 +31,7 @@ app.use(cors({
 const io = new Server(server, {
   cors: {
     origin: [
+      "https://www.bytesbase.tech",
       "https://blog-frontend-teal-ten.vercel.app",
       "http://localhost:5173",
     ],
