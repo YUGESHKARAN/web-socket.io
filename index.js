@@ -4,6 +4,11 @@ const cors    = require("cors");
 const { Server } = require("socket.io");
 require("dotenv").config();
 const mongoose = require("mongoose");
+const dns = require("dns");
+
+if (process.env.NODE_ENV === "development") {
+  dns.setServers(["8.8.8.8", "8.8.4.4"]);
+}
 
 const connectToDatabase = require("./db");
 
