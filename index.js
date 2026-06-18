@@ -226,6 +226,19 @@ const io = new Server(server, {
 
 const userSocketMap = new Map();
 const rateLimiter = new RateLimiter();
+// Track participants in each room: { postId: Set(emails) }
+const roomParticipants = new Map();
+
+// Helper function to broadcast live participants for a room
+const broadcastLiveParticipants = (postId) => {
+  const participants = roomParticipants.get(postId) || [];
+  io.to(postId).emit("liveParticipants", {
+    postId,
+    emails: Array.from(participants),
+    count: participants.size,
+  });
+  console.log(`Broadcasting ${participants.size} live participants for room ${postId}`);
+};
 
 io.on("connection", (socket) => {
   console.log("Socket connected:", socket.id);
@@ -297,7 +310,18 @@ io.on("connection", (socket) => {
 
   socket.on("registerUser", (email) => {
     userSocketMap.set(email, socket.id);
+    socket.email = email;
     console.log(`Registered: ${email} → ${socket.id}`);
+  });
+
+  socket.on("getLiveParticipants", (postId) => {
+    const participants = roomParticipants.get(postId) || [];
+    socket.emit("liveParticipants", {
+      postId,
+      emails: Array.from(participants),
+      count: participants.size,
+    });
+    console.log(`Sent live participants for room ${postId}: ${participants.size} users`);
   });
 
   socket.on("joinPostRoom", (postId) => {
@@ -314,6 +338,18 @@ io.on("connection", (socket) => {
     }
     
     socket.join(postId);
+    
+    // Add user to room participants if they're registered
+    if (socket.email) {
+      if (!roomParticipants.has(postId)) {
+        roomParticipants.set(postId, new Set());
+      }
+      roomParticipants.get(postId).add(socket.email);
+      
+      // Broadcast updated participants list
+      broadcastLiveParticipants(postId);
+    }
+    
     console.log(`Joined room: ${postId}`);
   });
 
@@ -443,15 +479,26 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     console.log("Disconnected:", socket.id);
-    for (let [email, id] of userSocketMap.entries()) {
-      if (id === socket.id) {
-        userSocketMap.delete(email);
-        // Clean up rate limiter for this user
-        rateLimiter.resetUser("newMessage", email);
-        rateLimiter.resetUser("editMessage", email);
-        rateLimiter.resetUser("deleteMessage", email);
-        console.log(`Unregistered: ${email}`);
-        break;
+    
+    const email = socket.email;
+    if (email) {
+      userSocketMap.delete(email);
+      // Clean up rate limiter for this user
+      rateLimiter.resetUser("newMessage", email);
+      rateLimiter.resetUser("editMessage", email);
+      rateLimiter.resetUser("deleteMessage", email);
+      console.log(`Unregistered: ${email}`);
+      
+      // Remove from all rooms and broadcast updated participants
+      for (let [postId, participants] of roomParticipants.entries()) {
+        if (participants.has(email)) {
+          participants.delete(email);
+          if (participants.size === 0) {
+            roomParticipants.delete(postId);
+          } else {
+            broadcastLiveParticipants(postId);
+          }
+        }
       }
     }
   });
