@@ -3,27 +3,36 @@ const bcrypt = require('bcrypt');
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // Message schema
+// const messageSchema = new mongoose.Schema({
+//   user: {
+//     type: String,
+//     required: false,
+//   },
+//   message: {
+//     type: String,
+//     required: false,
+//   },
+//   profile:{
+//     type:String,
+//     required:false
+//   },
+//   email: {
+//     type: String,
+//     required: true,
+//   },
+//   timestamp: {
+//     type: Date,
+//     default: Date.now,
+//   },
+// });
+
 const messageSchema = new mongoose.Schema({
-  user: {
-    type: String,
-    required: false,
-  },
-  message: {
-    type: String,
-    required: false,
-  },
-  profile:{
-    type:String,
-    required:false
-  },
-  email: {
-    type: String,
-    required: true,
-  },
-  timestamp: {
-    type: Date,
-    default: Date.now,
-  },
+  authorId:  { type: mongoose.Schema.Types.ObjectId, ref: 'Author', required: false },
+  user:      { type: String, required: false },
+  message:   { type: String, required: false },
+  profile:   { type: String, required: false },
+  email:     { type: String, required: true  },
+  timestamp: { type: Date,   default: Date.now },
 });
 
 const notificationSchema = new mongoose.Schema(
